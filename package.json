@@ -1,0 +1,35 @@
+{
+  "name": "assignments-runner",
+  "version": "1.0.0",
+  "description": "A simple tests app which check completed assignments",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "commit": "cz",
+    "commitizen": "commitizen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YaroslavHorbachov/assignments-runner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YaroslavHorbachov/assignments-runner/issues"
+  },
+  "homepage": "https://github.com/YaroslavHorbachov/assignments-runner#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.5",
+    "babel-jest": "^27.0.2",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "jest": "^27.0.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
