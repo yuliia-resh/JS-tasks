@@ -15,28 +15,33 @@ export function mapTo(arr, property) {
 }
 
 export function mapToProfile(arr) {
-  let properties = ["name", "surname", "fullname", "age"];
-  return arr.map((elem) => {
-    properties.every((el) => {
-      if (elem[el] === undefined) {
-        elem[el] = null;
+  const res = arr.map((profile) => {
+    return Object.defineProperties(
+      {
+        name: profile.name || null,
+        surname: profile.surname || null,
+        fullname:
+          profile.name || profile.surname
+            ? `${profile.name ?? "_"} ${profile.surname ?? "_"}`
+            : null,
+        age: profile.age || null,
+      },
+      {
+        isOld: {
+          get: function () {
+            return this.age >= 18;
+          },
+        },
+        isAnonymous: {
+          get: function () {
+            return this.name === null;
+          },
+        },
       }
-      if (el === "fullname") {
-        if (elem.name === null && elem.surname === null) {
-          elem.fullname = null;
-        } else if (elem.name === null) {
-          elem.fullname = "_" + " " + elem.surname;
-        } else if (elem.surname === null) {
-          elem.fullname = elem.name + " " + "_";
-        } else {
-          elem.fullname = elem.name + " " + elem.surname;
-        }
-      }
-
-      return elem;
-    });
-    return elem;
+    );
   });
+
+  return res;
 }
 
 export function filterBy(arr, property) {
@@ -63,18 +68,51 @@ export function reduceTo(arr, properties) {
       return prev + curr;
     });
   } else if (!Array.isArray(properties)) {
-    let mapping = arr.map((elem) => {
+    let numbers = arr.map((elem) => {
       return elem[properties];
     });
-    return mapping.reduce((prev, curr) => {
+    return numbers.reduce((prev, curr) => {
       return prev + curr;
+    });
+  } else {
+    let allNumbers = properties.map((el) => {
+      return arr.map((elem) => {
+        return elem[el];
+      });
+    });
+
+    return allNumbers.map((el) => {
+      return el.reduce((prev, curr) => {
+        return prev + curr;
+      });
     });
   }
 }
 
-export function sort() {
-  // TODO:
-  throw "Not implemented";
+export function sort(arr, keys) {
+  if (keys === undefined) return arr.sort((a, b) => a - b);
+  else if (!Array.isArray(keys)) return arr.sort((a, b) => a[keys] - b[keys]);
+  else if (typeof keys[1] !== Object) {
+    return arr.sort((a, b) => {
+      if (a[keys[0]] === b[keys[0]]) {
+        if (a[keys[1]] > b[keys[1]]) return 1;
+        if (a[keys[1]] < b[keys[1]]) return -1;
+        if (a[keys[1]] === b[keys[1]]) return 0;
+      }
+      if (a[keys[0]] > b[[keys[0]]]) return 1;
+      if (a[keys[0]] < b[keys[0]]) return -1;
+    });
+  } else {
+    return arr.sort((a, b) => {
+      if (a[keys[0]] === b[keys[0]]) {
+        if (a[keys[1]] > b[keys[1]]) return -1;
+        if (a[keys[1]] < b[keys[1]]) return 1;
+        else return 0;
+      }
+      if (a[keys[0]] > b[keys[0]]) return 1;
+      if (a[keys[0]] < b[keys[0]]) return -1;
+    });
+  }
 }
 
 export function complex() {
