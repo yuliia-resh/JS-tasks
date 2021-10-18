@@ -1,17 +1,17 @@
 export function mapTo(arr, property) {
   if (Number.isInteger(arr[0])) {
-    return arr.map((elem, index) => {
+    return arr.map((_, index) => {
       return index;
     });
-  } else {
-    let res = arr.filter((elem) => {
-      return elem[property] !== undefined;
-    });
-
-    return res.map((elem) => {
-      return elem[property];
-    });
   }
+  const res = arr.reduce((acc, item) => {
+    if (item[property]) {
+      return [...acc, item[property]];
+    }
+    return acc;
+  }, []);
+
+  return res;
 }
 
 export function mapToProfile(arr) {
@@ -49,17 +49,18 @@ export function filterBy(arr, property) {
     return arr.filter((elem) => {
       return elem >= property;
     });
-  } else if (typeof property === "string") {
+  }
+
+  if (typeof property === "string") {
     return arr.filter((elem) => {
       return elem.hasOwnProperty(property);
     });
-  } else {
-    return arr.filter((elem) => {
-      return (
-        elem.hasOwnProperty(property.property) && property.filterCb(elem.age)
-      );
-    });
   }
+  return arr.filter((elem) => {
+    return (
+      elem.hasOwnProperty(property.property) && property.filterCb(elem.age)
+    );
+  });
 }
 
 export function reduceTo(arr, properties) {
@@ -67,52 +68,52 @@ export function reduceTo(arr, properties) {
     return arr.reduce((prev, curr) => {
       return prev + curr;
     });
-  } else if (!Array.isArray(properties)) {
+  } if (!Array.isArray(properties)) {
     let numbers = arr.map((elem) => {
       return elem[properties];
     });
     return numbers.reduce((prev, curr) => {
       return prev + curr;
     });
-  } else {
+  } 
     let allNumbers = properties.map((el) => {
       return arr.map((elem) => {
         return elem[el];
       });
     });
 
-    return allNumbers.map((el) => {
+    return allNumbers.map((el) => { // TODO: move to map
       return el.reduce((prev, curr) => {
         return prev + curr;
       });
     });
-  }
+  
 }
 
 export function sort(arr, keys) {
   if (keys === undefined) return arr.sort((a, b) => a - b);
-  else if (!Array.isArray(keys)) return arr.sort((a, b) => a[keys] - b[keys]);
-  else if (typeof keys[1] !== Object) {
+  if (typeof keys === "string") return arr.sort((a, b) => a[keys] - b[keys]);
+  if (typeof keys[1] !== "object") {
     return arr.sort((a, b) => {
       if (a[keys[0]] === b[keys[0]]) {
         if (a[keys[1]] > b[keys[1]]) return 1;
         if (a[keys[1]] < b[keys[1]]) return -1;
-        if (a[keys[1]] === b[keys[1]]) return 0;
+        return 0;
       }
       if (a[keys[0]] > b[[keys[0]]]) return 1;
       if (a[keys[0]] < b[keys[0]]) return -1;
     });
-  } else {
-    return arr.sort((a, b) => {
-      if (a[keys[0]] === b[keys[0]]) {
-        if (a[keys[1]] > b[keys[1]]) return -1;
-        if (a[keys[1]] < b[keys[1]]) return 1;
-        else return 0;
-      }
-      if (a[keys[0]] > b[keys[0]]) return 1;
-      if (a[keys[0]] < b[keys[0]]) return -1;
-    });
   }
+
+  return arr.sort((a, b) => {
+    if (a[keys[0]] === b[keys[0]]) {
+      if (a[keys[1].field] > b[keys[1].field]) return keys[1].order === "desc" ? -1 : 1;
+      if (a[keys[1].field] < b[keys[1].field]) return keys[1].order === "desc" ? 1 : -1;
+      return 0;
+    }
+    if (a[keys[0]] > b[keys[0]]) return 1;
+    if (a[keys[0]] < b[keys[0]]) return -1;
+  });
 }
 
 export function complex(data, tasks) {

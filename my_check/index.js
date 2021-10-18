@@ -73,31 +73,30 @@ let reduceTest = [
   { total: 7, difference: 2 },
   { total: 8, difference: 1 },
 ];
-
 function sort(arr, keys) {
   if (keys === undefined) return arr.sort((a, b) => a - b);
-  else if (!Array.isArray(keys)) return arr.sort((a, b) => a[keys] - b[keys]);
-  else if (typeof keys[1] !== Object) {
+  if (typeof keys === "string") return arr.sort((a, b) => a[keys] - b[keys]);
+  if (typeof keys[1] !== "object") {
     return arr.sort((a, b) => {
       if (a[keys[0]] === b[keys[0]]) {
         if (a[keys[1]] > b[keys[1]]) return 1;
         if (a[keys[1]] < b[keys[1]]) return -1;
-        if (a[keys[1]] === b[keys[1]]) return 0;
+        return 0;
       }
       if (a[keys[0]] > b[[keys[0]]]) return 1;
       if (a[keys[0]] < b[keys[0]]) return -1;
     });
-  } else {
-    return arr.sort((a, b) => {
-      if (a[keys[0]] == b[keys[0]]) {
-        if (a[keys[1]] > b[keys[1]]) return -1;
-        if (a[keys[1]] < b[keys[1]]) return 1;
-        else return 0;
-      }
-      if (a[keys[0]] > b[keys[0]]) return 1;
-      if (a[keys[0]] < b[keys[0]]) return -1;
-    });
   }
+
+  return arr.sort((a, b) => {
+    if (a[keys[0]] === b[keys[0]]) {
+      if (a[keys[1].field] > b[keys[1].field]) return keys[1].order === "desc" ? -1 : 1;
+      if (a[keys[1].field] < b[keys[1].field]) return keys[1].order === "desc" ? 1 : -1;
+      return 0;
+    }
+    if (a[keys[0]] > b[keys[0]]) return 1;
+    if (a[keys[0]] < b[keys[0]]) return -1;
+  });
 }
 
 let sortTest = [
@@ -108,7 +107,7 @@ let sortTest = [
   { age: 4, total: 7 },
   { age: 11, total: 7 },
 ];
-//console.log(sort(sortTest, ["total", { field: "age", order: "desc" }]));
+console.log(sort(sortTest, ["total", { field: "age", order: "desc" }]));
 
 function complex(data, tasks) {
   tasks.forEach((task) => {
@@ -199,20 +198,21 @@ function counter(param1, param2) {
 // console.log(counter());
 // console.log(counter());
 
-let resMultiplier;
-
 function callableMultiplier(...args) {
-  //let args = Array.from(arguments);
-  return args.length > 0
-    ? (resMultiplier = args.reduce((a, b) => {
-        return a * b;
-      }))
-    : (resMultiplier ? resMultiplier++ : null);
+  if (args.length > 0) {
+    const result = args.reduce((accumulator, value) => accumulator * value, 1);
+    const sum = (...innerArgs) => {
+      if (innerArgs.length === 0) return result;
+      return callableMultiplier(...args, ...innerArgs);
+    };
+    return sum;
+  }
+  return null;
 }
 
-console.log(callableMultiplier());
-console.log(callableMultiplier(2)());
-console.log(callableMultiplier(2, 2));
-console.log(callableMultiplier(2, 2)(2, 2)());
-console.log(callableMultiplier(1)(2)(3)(4)(5)());
-console.log(callableMultiplier(1, 2)(2, 3, 1)(1, 2, 3, 2)());
+// console.log(callableMultiplier());
+// console.log(callableMultiplier(2)());
+// console.log(callableMultiplier(2, 2));
+// console.log(callableMultiplier(2, 2)(2, 2)());
+// console.log(callableMultiplier(1)(2)(3)(4)(5)());
+// console.log(callableMultiplier(1, 2)(2, 3, 1)(1, 2, 3, 2)());

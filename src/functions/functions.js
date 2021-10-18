@@ -42,16 +42,55 @@ export function counter(param1, param2) {
   }
 }
 
-export function createCalculator() {
-  // TODO:
-  throw "Not implemented";
+export function callableMultiplier(...args) {
+  if (args.length > 0) {
+    const result = args.reduce((accumulator, value) => accumulator * value);
+    const sum = (...innerArgs) => {
+      if (innerArgs.length === 0) return result;
+      return callableMultiplier(...args, ...innerArgs);
+    };
+    return sum;
+  }
+  return null;
 }
 
-let resMultiplier;
-export function callableMultiplier(...args) {
-  return args
-    ? (resMultiplier = args.reduce((a, b) => {
-        return a * b;
-      }))
-    : (resMultiplier ? resMultiplier++ : null);
+export function createCalculator(value) {
+  function Calculator(initValue = 0) {
+
+    this._value = initValue
+
+    Object.defineProperty(this, 'value', {
+        get: function () {
+            return this._value
+        },
+        set: function () {
+        }
+
+    })
+
+    this.log = [{operation: 'init', value: this._value}]
+
+    this.add = function (number) {
+        this.operation = 'add'
+        this._value = this._value + number
+        this.log.push({operation: this.operation, value: number})
+    }
+    this.subtract = function (number) {
+        this.operation = 'subtract'
+        this._value = this._value - number
+        this.log.push({operation: this.operation, value: number})
+    }
+    this.multiply = function (number) {
+        this.operation = 'multiply'
+        this._value = this._value * number
+        this.log.push({operation: this.operation, value: number})
+    }
+    this.divide = function (number) {
+        this.operation = 'divide'
+        this._value = this._value / number
+        this.log.push({operation: this.operation, value: number})
+    }
+}
+
+return new Calculator(value)
 }
