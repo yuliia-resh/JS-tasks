@@ -1,5 +1,5 @@
 TN:
-SF:src\arrays\arrays.js
+SF:src/arrays/arrays.js
 FN:1,mapTo
 FN:3,(anonymous_1)
 FN:7,(anonymous_2)
@@ -207,7 +207,7 @@ BRF:66
 BRH:58
 end_of_record
 TN:
-SF:src\functions\functions.js
+SF:src/functions/functions.js
 FN:4,counter
 FN:14,(anonymous_1)
 FN:31,(anonymous_2)
@@ -327,7 +327,7 @@ BRF:27
 BRH:23
 end_of_record
 TN:
-SF:src\operators\operators.js
+SF:src/operators/operators.js
 FN:1,add
 FN:7,subtract
 FN:15,complex

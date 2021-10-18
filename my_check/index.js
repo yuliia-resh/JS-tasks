@@ -76,27 +76,41 @@ let reduceTest = [
 function sort(arr, keys) {
   if (keys === undefined) return arr.sort((a, b) => a - b);
   if (typeof keys === "string") return arr.sort((a, b) => a[keys] - b[keys]);
-  if (typeof keys[1] !== "object") {
-    return arr.sort((a, b) => {
-      if (a[keys[0]] === b[keys[0]]) {
-        if (a[keys[1]] > b[keys[1]]) return 1;
-        if (a[keys[1]] < b[keys[1]]) return -1;
-        return 0;
-      }
-      if (a[keys[0]] > b[[keys[0]]]) return 1;
-      if (a[keys[0]] < b[keys[0]]) return -1;
-    });
-  }
-
   return arr.sort((a, b) => {
-    if (a[keys[0]] === b[keys[0]]) {
-      if (a[keys[1].field] > b[keys[1].field]) return keys[1].order === "desc" ? -1 : 1;
-      if (a[keys[1].field] < b[keys[1].field]) return keys[1].order === "desc" ? 1 : -1;
-      return 0;
-    }
-    if (a[keys[0]] > b[keys[0]]) return 1;
-    if (a[keys[0]] < b[keys[0]]) return -1;
+    return keys.forEach((key) => {
+      if (typeof key === "string") {
+        return a[key] > b[key] ? 1 : a[key] === b[key] ? 0 : -1; //Can I write code like this?
+      }
+      if (typeof key === "object") {
+        if (a[key.field] > b[key.field]) {
+          return key.order === "desc" ? -1 : 1;
+        }
+        if (a[key.field] > b[key.field]) {
+          return key.order === "desc" ? 1 : -1;
+        }
+      }
+    });
   });
+
+  // if (a[keys[0]] === b[keys[0]]) {
+  //   if (a[keys[1]] > b[keys[1]]) return 1;
+  //   if (a[keys[1]] < b[keys[1]]) return -1;
+  //   return 0;
+  // }
+  // if (a[keys[0]] > b[[keys[0]]]) return 1;
+  // if (a[keys[0]] < b[keys[0]]) return -1;
+
+  // return arr.sort((a, b) => {
+  //   if (a[keys[0]] === b[keys[0]]) {
+  //     if (a[keys[1].field] > b[keys[1].field])
+  //       return keys[1].order === "desc" ? -1 : 1;
+  //     if (a[keys[1].field] < b[keys[1].field])
+  //       return keys[1].order === "desc" ? 1 : -1;
+  //     return 0;
+  //   }
+  //   if (a[keys[0]] > b[keys[0]]) return 1;
+  //   if (a[keys[0]] < b[keys[0]]) return -1;
+  // });
 }
 
 let sortTest = [

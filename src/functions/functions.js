@@ -45,11 +45,11 @@ export function counter(param1, param2) {
 export function callableMultiplier(...args) {
   if (args.length > 0) {
     const result = args.reduce((accumulator, value) => accumulator * value);
-    const sum = (...innerArgs) => {
+    const multy = (...innerArgs) => {
       if (innerArgs.length === 0) return result;
       return callableMultiplier(...args, ...innerArgs);
     };
-    return sum;
+    return multy;
   }
   return null;
 }

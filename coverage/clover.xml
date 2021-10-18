@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1634561569992" clover="3.2.0">
-  <project timestamp="1634561569992" name="All files">
+<coverage generated="1634589934771" clover="3.2.0">
+  <project timestamp="1634589934771" name="All files">
     <metrics statements="140" coveredstatements="135" conditionals="105" coveredconditionals="93" methods="50" coveredmethods="50" elements="295" coveredelements="278" complexity="0" loc="140" ncloc="140" packages="3" files="3" classes="3"/>
     <package name="arrays">
       <metrics statements="71" coveredstatements="69" conditionals="66" coveredconditionals="58" methods="31" coveredmethods="31"/>
-      <file name="arrays.js" path="C:\Users\User\Desktop\js-tasks\JS-tasks\src\arrays\arrays.js">
+      <file name="arrays.js" path="/Users/yuliia.resh/Documents/JS-tasks/JS-tasks/src/arrays/arrays.js">
         <metrics statements="71" coveredstatements="69" conditionals="66" coveredconditionals="58" methods="31" coveredmethods="31"/>
         <line num="2" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="3" count="1" type="stmt"/>
@@ -81,7 +81,7 @@
     </package>
     <package name="functions">
       <metrics statements="56" coveredstatements="53" conditionals="27" coveredconditionals="23" methods="14" coveredmethods="14"/>
-      <file name="functions.js" path="C:\Users\User\Desktop\js-tasks\JS-tasks\src\functions\functions.js">
+      <file name="functions.js" path="/Users/yuliia.resh/Documents/JS-tasks/JS-tasks/src/functions/functions.js">
         <metrics statements="56" coveredstatements="53" conditionals="27" coveredconditionals="23" methods="14" coveredmethods="14"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -143,7 +143,7 @@
     </package>
     <package name="operators">
       <metrics statements="13" coveredstatements="13" conditionals="12" coveredconditionals="12" methods="5" coveredmethods="5"/>
-      <file name="operators.js" path="C:\Users\User\Desktop\js-tasks\JS-tasks\src\operators\operators.js">
+      <file name="operators.js" path="/Users/yuliia.resh/Documents/JS-tasks/JS-tasks/src/operators/operators.js">
         <metrics statements="13" coveredstatements="13" conditionals="12" coveredconditionals="12" methods="5" coveredmethods="5"/>
         <line num="2" count="7" type="cond" truecount="4" falsecount="0"/>
         <line num="3" count="2" type="stmt"/>
