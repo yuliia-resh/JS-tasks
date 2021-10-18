@@ -115,7 +115,33 @@ export function sort(arr, keys) {
   }
 }
 
-export function complex() {
-  // TODO:
-  throw "Not implemented";
+export function complex(data, tasks) {
+  tasks.forEach((task) => {
+    if (task.operation === "filter") {
+      data = data.filter((elem) => {
+        return task.callback(elem[task.property]);
+      });
+      return data;
+    } else if (task.operation === "map") {
+      data = data.map((elem) => {
+        return elem[task.property];
+      });
+      return data;
+    } else if (task.operation === "reduce") {
+      data = data
+        .map((elem) => {
+          return elem[task.property];
+        })
+        .reduce((prev, curr) => {
+          return prev + curr;
+        });
+      return data;
+    } else if (task.operation === "sort") {
+      data = data.sort((a, b) => {
+        return b - a;
+      });
+      return data;
+    }
+  });
+  return data;
 }
