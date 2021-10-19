@@ -1,15 +1,9 @@
 export function add(a, b) {
-  if (Number.isInteger(a) && Number.isInteger(b)) {
-    return a + b;
-  } else return null;
+  return Number.isInteger(a) && Number.isInteger(b) ? a + b : null;
 }
 
 export function subtract(a, b) {
-  if (Number.isInteger(a) && Number.isInteger(b)) {
-    return a - b;
-  } else return null;
-
-  //throw 'Not implemented';
+  return Number.isInteger(a) && Number.isInteger(b) ? a - b : null;
 }
 
 export function complex(arr1, arr2) {
@@ -23,7 +17,6 @@ export function complex(arr1, arr2) {
 
   if (firstStep && secondStep) {
     return (arr1[0] * arr1[1]) ** (arr2[0] / arr2[1]);
-  } else return null;
-
-  //throw 'Not implemented';
+  }
+  return null;
 }
