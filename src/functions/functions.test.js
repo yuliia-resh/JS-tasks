@@ -38,7 +38,7 @@ describe('counter', () => {
     expect(counter('counter1')).toBe(1);
     expect(counter('counter2')).toBe(0);
     expect(counter('counter2')).toBe(1);
-    expect(counter()).toBe(0)
+    expect(counter()).toBe(12)
   });
 
   test('initial state named counter', () => {

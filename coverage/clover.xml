@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1634642958643" clover="3.2.0">
-  <project timestamp="1634642958643" name="All files">
-    <metrics statements="142" coveredstatements="139" conditionals="105" coveredconditionals="93" methods="51" coveredmethods="51" elements="298" coveredelements="283" complexity="0" loc="142" ncloc="142" packages="3" files="3" classes="3"/>
+<coverage generated="1634644174518" clover="3.2.0">
+  <project timestamp="1634644174518" name="All files">
+    <metrics statements="139" coveredstatements="136" conditionals="105" coveredconditionals="93" methods="49" coveredmethods="49" elements="293" coveredelements="278" complexity="0" loc="139" ncloc="139" packages="3" files="3" classes="3"/>
     <package name="arrays">
-      <metrics statements="71" coveredstatements="71" conditionals="66" coveredconditionals="58" methods="31" coveredmethods="31"/>
+      <metrics statements="68" coveredstatements="68" conditionals="66" coveredconditionals="58" methods="29" coveredmethods="29"/>
       <file name="arrays.js" path="/Users/yuliia.resh/Documents/JS-tasks/JS-tasks/src/arrays/arrays.js">
-        <metrics statements="71" coveredstatements="71" conditionals="66" coveredconditionals="58" methods="31" coveredmethods="31"/>
+        <metrics statements="68" coveredstatements="68" conditionals="66" coveredconditionals="58" methods="29" coveredmethods="29"/>
         <line num="2" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
@@ -38,9 +38,6 @@
         <line num="79" count="1" type="stmt"/>
         <line num="80" count="2" type="stmt"/>
         <line num="81" count="6" type="stmt"/>
-        <line num="85" count="1" type="stmt"/>
-        <line num="86" count="2" type="stmt"/>
-        <line num="87" count="4" type="stmt"/>
         <line num="94" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="95" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="96" count="2" type="stmt"/>

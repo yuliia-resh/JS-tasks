@@ -76,18 +76,11 @@ export function reduceTo(arr, properties) {
       return prev + curr;
     });
   } 
-    let allNumbers = properties.map((el) => {
-      return arr.map((elem) => {
-        return elem[el];
-      });
+    return properties.map((el) => {
+      return arr.reduce((acc, elem) => {
+        return Number(acc + elem[el]);
+      }, []);
     });
-
-    return allNumbers.map((el) => { // TODO: move to map
-      return el.reduce((prev, curr) => {
-        return prev + curr;
-      });
-    });
-  
 }
 
 export function sort(arr, keys) {
