@@ -93,27 +93,32 @@ export function reduceTo(arr, properties) {
 export function sort(arr, keys) {
   if (keys === undefined) return arr.sort((a, b) => a - b);
   if (typeof keys === "string") return arr.sort((a, b) => a[keys] - b[keys]);
-  if (typeof keys[1] !== "object") {
-    return arr.sort((a, b) => {
-      if (a[keys[0]] === b[keys[0]]) {
-        if (a[keys[1]] > b[keys[1]]) return 1;
-        if (a[keys[1]] < b[keys[1]]) return -1;
-        return 0;
-      }
-      if (a[keys[0]] > b[[keys[0]]]) return 1;
-      if (a[keys[0]] < b[keys[0]]) return -1;
-    });
-  }
+  let result = [];
 
-  return arr.sort((a, b) => {
-    if (a[keys[0]] === b[keys[0]]) {
-      if (a[keys[1].field] > b[keys[1].field]) return keys[1].order === "desc" ? -1 : 1;
-      if (a[keys[1].field] < b[keys[1].field]) return keys[1].order === "desc" ? 1 : -1;
-      return 0;
-    }
-    if (a[keys[0]] > b[keys[0]]) return 1;
-    if (a[keys[0]] < b[keys[0]]) return -1;
+  keys.forEach((key, index) => {
+    return keys.length <= 2 && index === 1 ? result :  
+    result = arr.sort((a, b) => {
+      
+      if (typeof key === "string") {
+        if (a[key] > b[key]) return 1;
+        if (a[key] < b[key]) return -1;
+        if (a[key] === b[key]) {
+          let i = index + 1;
+          if (typeof keys[i] === "object") {
+            if (a[keys[i].field] > b[keys[i].field]) {
+              return keys[i].order === "desc" ? -1 : 1;
+            }
+            if (a[keys[i].field] < b[keys[i].field]) {
+              return keys[i].order === "desc" ? 1 : -1;
+            }
+          }
+          return a[keys[i]] > b[keys[i]] ? 1 : a[keys[i]] < b[keys[i]] ? -1 : 0; // Can I write code like this?
+        }
+      }
+    });
+    
   });
+  return result;
 }
 
 export function complex(data, tasks) {

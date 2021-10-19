@@ -76,41 +76,35 @@ let reduceTest = [
 function sort(arr, keys) {
   if (keys === undefined) return arr.sort((a, b) => a - b);
   if (typeof keys === "string") return arr.sort((a, b) => a[keys] - b[keys]);
-  return arr.sort((a, b) => {
-    return keys.forEach((key) => {
-      if (typeof key === "string") {
-        return a[key] > b[key] ? 1 : a[key] === b[key] ? 0 : -1; //Can I write code like this?
-      }
-      if (typeof key === "object") {
-        if (a[key.field] > b[key.field]) {
-          return key.order === "desc" ? -1 : 1;
-        }
-        if (a[key.field] > b[key.field]) {
-          return key.order === "desc" ? 1 : -1;
-        }
-      }
-    });
+  let result = [];
+
+  keys.forEach((key, index) => {
+    return keys.length <= 2 && index === 1
+      ? result
+      : (result = arr.sort((a, b) => {
+          if (typeof key === "string") {
+            if (a[key] > b[key]) return 1;
+            if (a[key] < b[key]) return -1;
+            if (a[key] === b[key]) {
+              let i = index + 1;
+              if (typeof keys[i] === "object") {
+                if (a[keys[i].field] > b[keys[i].field]) {
+                  return keys[i].order === "desc" ? -1 : 1;
+                }
+                if (a[keys[i].field] < b[keys[i].field]) {
+                  return keys[i].order === "desc" ? 1 : -1;
+                }
+              }
+              return a[keys[i]] > b[keys[i]]
+                ? 1
+                : a[keys[i]] < b[keys[i]]
+                ? -1
+                : 0; // Can I write code like this?
+            }
+          }
+        }));
   });
-
-  // if (a[keys[0]] === b[keys[0]]) {
-  //   if (a[keys[1]] > b[keys[1]]) return 1;
-  //   if (a[keys[1]] < b[keys[1]]) return -1;
-  //   return 0;
-  // }
-  // if (a[keys[0]] > b[[keys[0]]]) return 1;
-  // if (a[keys[0]] < b[keys[0]]) return -1;
-
-  // return arr.sort((a, b) => {
-  //   if (a[keys[0]] === b[keys[0]]) {
-  //     if (a[keys[1].field] > b[keys[1].field])
-  //       return keys[1].order === "desc" ? -1 : 1;
-  //     if (a[keys[1].field] < b[keys[1].field])
-  //       return keys[1].order === "desc" ? 1 : -1;
-  //     return 0;
-  //   }
-  //   if (a[keys[0]] > b[keys[0]]) return 1;
-  //   if (a[keys[0]] < b[keys[0]]) return -1;
-  // });
+  return result;
 }
 
 let sortTest = [
@@ -121,7 +115,7 @@ let sortTest = [
   { age: 4, total: 7 },
   { age: 11, total: 7 },
 ];
-console.log(sort(sortTest, ["total", { field: "age", order: "desc" }]));
+//console.log(sort(sortTest, ["age", "total"]));
 
 function complex(data, tasks) {
   tasks.forEach((task) => {
@@ -177,40 +171,63 @@ let complexTest = [
 //   ])
 // );
 
-let counters = [];
-let count = 0;
+const counter = (function () {
+  let count = 0;
+  let counters = [];
 
-function counter(param1, param2) {
-  if (typeof param1 !== "string" && param2 === undefined) {
-    param1 ? (count = param1) : count;
-    return count++;
-  } else if (typeof param1 === "string" && param2 === undefined) {
-    if (counters.length === 0) {
-      counters.push({ counter: param1, count: 0 });
-      return 0;
+  return function (param1, param2) {
+    if (typeof param1 !== "string" && param2 === undefined) {
+      param1 ? (count = param1) : count;
+      return count++;
+    } else if (typeof param1 === "string" && param2 === undefined) {
+      if (counters.length === 0) {
+        counters.push({ counter: param1, count: 0 });
+        return 0;
+      } else {
+        let res;
+        counters.forEach((counter) => {
+          if (counter.counter === param1) {
+            res = ++counter.count;
+          } else if (counter.counter[param1] === undefined) {
+            counter.counter = param1;
+            counter.count = 0;
+            res = counter.count;
+          }
+        });
+        return res;
+      }
     } else {
-      let res;
-      counters.forEach((counter) => {
-        if (counter.counter === param1) {
-          res = ++counter.count;
-        } else if (counter.counter[param1] === undefined) {
-          counter.counter = param1;
-          counter.count = 0;
-          res = counter.count;
-        }
-      });
-      return res;
+      if (counters.length === 0) {
+        counters.push({ counter: param2, count: param1 });
+        return param1;
+      } else {
+        let res;
+        counters.forEach((counter) => {
+          if (counter.counter === param2) {
+            res = ++counter.count;
+          } else if (counter.counter[param2] === undefined) {
+            counter.counter = param2;
+            counter.count = param1;
+            res = counter.count;
+          }
+        });
+        return res;
+      }
     }
-  }
-}
+  };
+})();
 
-// console.log(counter("counter1"));
-// console.log(counter("counter1"));
-// console.log(counter("counter2"));
-// console.log(counter("counter2"));
-// console.log(counter());
-// console.log(counter());
-// console.log(counter());
+console.log(counter());
+console.log(counter());
+console.log(counter(10));
+console.log(counter(11));
+console.log(counter("counter1"));
+console.log(counter("counter1"));
+console.log(counter("counter2"));
+console.log(counter("counter2"));
+console.log(counter());
+console.log(counter());
+console.log(counter());
 
 function callableMultiplier(...args) {
   if (args.length > 0) {
